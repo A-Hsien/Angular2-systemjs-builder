@@ -25,3 +25,22 @@ run "systemjs.builder" to build @angular libs.
 ```bash
 node systemjs.builder.config.js
 ```
+
+you should see the following messages show on console.
+
+```bash
+@angular/coreBuild complete
+@angular/httpBuild complete
+@angular/commonBuild complete
+@angular/platform-browserBuild complete
+@angular/router-deprecatedBuild complete
+@angular/compilerBuild complete
+@angular/platform-browser-dynamicBuild complete
+@angular/upgradeBuild complete
+```
+
+now everything is ready to run!
+
+```bash
+npm start
+```
