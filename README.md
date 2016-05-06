@@ -44,3 +44,83 @@ now everything is ready to run!
 ```bash
 npm start
 ```
+
+## detail info
+
+the setting of systemjs-builder
+
+```javascript
+var Builder = require('systemjs-builder');
+
+var packages = {};
+var packageNames = [
+  '@angular/common',
+  '@angular/compiler',
+  '@angular/core',
+  '@angular/http',
+  '@angular/platform-browser',
+  '@angular/platform-browser-dynamic',
+  '@angular/router-deprecated',
+  '@angular/upgrade',
+];
+
+packageNames.forEach(function(pkgName) {
+  packages[pkgName] = { main: 'index.js' };
+});
+
+var builder = new Builder({
+  baseURL: '/node_modules',
+  defaultJSExtensions: true,
+  packages: packages
+});
+
+packageNames.forEach(function(pkgName) {
+  builder.bundle(pkgName, 'assets/'+ pkgName+'.js')
+    .then(function() {
+      console.log(pkgName+'Build complete');
+    })
+    .catch(function(err) {
+      console.log(pkgName+'Build error');
+      console.log(err);
+    });
+});
+```
+and modify the "systemjs.config.js".
+
+```javascript
+var map = {
+    'app':                        'app', // 'dist',
+    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api'
+  };
+
+  // packages tells the System loader how to load when no filename and/or no extension
+  var packages = {
+    'app':                        { main: 'main.js'},
+    'angular2-in-memory-web-api': { },
+  };
+
+  var packageNames = [
+    '@angular/common',
+    '@angular/compiler',
+    '@angular/core',
+    '@angular/http',
+    '@angular/platform-browser',
+    '@angular/platform-browser-dynamic',
+    '@angular/router-deprecated',
+    '@angular/testing',
+    '@angular/upgrade',
+  ];
+
+  // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
+  packageNames.forEach(function(pkgName) {
+    packages[pkgName] = { main: 'index.js' };
+  });
+
+  var config = {
+    defaultJSExtensions: true,
+    map: map,
+    packages: packages
+  }
+
+  System.config(config);
+```
